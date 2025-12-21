@@ -26,7 +26,7 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");
     <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white sticky z-10 top-0">
       <nav class="flex container mx-auto justify-between items-center px-4 py-6">
         <h1 class="text-1xl md:text-3x1 lg:text-4xl font-bold">
-          <a href="#home"> Smart Study Planner</a>
+          <a href="./home.html"> Smart Study Planner</a>
         </h1>
         <div class="flex items-center gap-4 text-2xl">
         <span class="hidden sm:block">Welcome, Student</span>

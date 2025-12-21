@@ -27,7 +27,7 @@ $pendingTasks = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM tasks WHERE 
         class="flex container mx-auto justify-between items-center px-4 py-6"
       >
         <h1 class="text-1xl md:text-3x1 lg:text-4xl font-bold">
-          <a href="#home"> Smart Study Planner</a>
+          <a href="./home.html"> Smart Study Planner</a>
         </h1>
         <div class="flex items-center gap-4 text-2xl">
           <span class="hidden sm:block">Welcome, Student</span>
