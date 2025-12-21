@@ -16,8 +16,7 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
 
   <body class="min-h-screen flex flex-col bg-[#F7FAFF]">
     <header
-      class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white sticky z-10 top-0"
-    >
+      class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white sticky z-10 top-0">
       <nav
         class="flex container mx-auto justify-between items-center px-4 py-6"
       >
@@ -81,81 +80,126 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
               </button>
             </div>
             <div class="bg-white rounded-xl shadow p-4">
-              <div
-                id="taskList"
-                class="space-y-4 min-h-[420px] max-h-[420px] overflow-y-auto pr-2">
-                <?php if (mysqli_num_rows($result) >
-                0): ?>
-                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <?php $completed = $row['status'] == 1; ?>
+              <div class="bg-white rounded-xl shadow overflow-hidden">
+             <div class="relative overflow-x-auto min-h-[420px] max-h-[420px] -mx-4 sm:mx-0">
+             <table class="min-w-[900px] w-full text-sm text-left text-gray-700">
+            <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+            <tr>
+                <th scope="col" class="p-4">
+                    <div class="flex items-center">
+                        <input id="table-checkbox" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
+                        <label for="table-checkbox" class="sr-only">Table checkbox</label>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    S.N
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Title
+                </th>
+                <th scope="col" class="px-6  py-3 font-medium">
+                    Description
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Time
+                </th>
+                <th scope="col" class="px-6 py-3  font-medium">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+                <td class="w-4 p-4">
+                    <div class="flex items-center">
+                        <input id="table-checkbox-2" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
+                        <label for="table-checkbox-2" class="sr-only">Table checkbox</label>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    1
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                    Math
+                </th>
+                <td class="px-6 py-4">
+                    Silver Lorem ipsum, dolor sit amet consectetur adipisicing elit. I
+                </td>
+                <td class="px-6 py-4">
+                    pending
+                </td>
+                <td class="px-6 py-4">
+                    2025-12-12
+                </td>
+                <td class="flex items-center px-6 py-4">
+                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
+                </td>
+            </tr>
+            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+                <td class="w-4 p-4">
+                    <div class="flex items-center">
+                        <input id="table-checkbox-3" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
+                        <label for="table-checkbox-3" class="sr-only">Table checkbox</label>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    2
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                    Science
+                </th>
+                <td class="px-6 py-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam.
+                </td>
+                <td class="px-6 py-4">
+                    completed
+                </td>
+                <td class="px-6 py-4">
+                    2025-12-12
+                </td>
+                <td class="flex items-center px-6 py-4">
+                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
+                </td>
+            </tr>
+            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+                <td class="w-4 p-4">
+                    <div class="flex items-center">
+                        <input id="table-checkbox-4" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
+                        <label for="table-checkbox-4" class="sr-only">Table checkbox</label>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    3
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                    english
+                </th>
+                <td class="px-6 py-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto explicabo quaerat harum.
+                </td>
+                <td class="px-6 py-4">
+                    pending
+                </td>
+                <td class="px-6 py-4">
+                    2025-12-12
+                </td>
+                <td class="flex items-center px-6 py-4">
+                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+  </div>
+</div>
 
-               <div class="rounded-lg p-4 shadow-sm border transition 
-                <?= $completed ? 'opacity-50 bg-gray-100' : 'bg-[#F7FAFF]' ?>">
-  
-               <div class="flex items-start gap-3">
-    
-    
-    <form action="../backend/update_status.php" method="POST">
-      <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
-      <input type="hidden" name="status" value="<?= $completed ? 0 : 1; ?>">
-      
-      <input 
-        type="checkbox" 
-        onchange="this.form.submit()"
-        <?= $completed ? 'checked' : ''; ?>
-        class="mt-1 w-5 h-5 accent-blue-600 cursor-pointer"
-      >
-    </form>
 
-    <div class="flex-1">
-      <h3 class="text-lg font-semibold 
-        <?= $completed ? 'line-through text-gray-400' : ''; ?>">
-        <?= htmlspecialchars($row['task_title']); ?>
-      </h3>
-
-      <p class="text-sm mt-1 
-        <?= $completed ? 'line-through text-gray-400' : 'text-gray-600'; ?>">
-        <?= htmlspecialchars($row['task_description']); ?>
-      </p>
-
-      <div class="flex gap-2 mt-2">
-        <span class="px-3 py-1 text-xs rounded-full border bg-white">
-          <?= htmlspecialchars($row['categoty']); ?>
-        </span>
-        <span class="text-xs text-gray-400">
-          <?= htmlspecialchars($row['created_at']); ?>
-        </span>
-      </div>
-  
-      
-      <form action="../backend/delete_task.php" method="POST" class="mt-3 flex gap-3">
-        <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
-
-        <button
-          <?= $completed ? 'disabled' : ''; ?>
-          class="text-blue-600 text-sm flex items-center gap-1 px-6 py-2 rounded-2xl 
-          hover:bg-blue-100 disabled:opacity-40 disabled:cursor-not-allowed">
-          <i class="ri-edit-box-line"></i> Edit
-        </button>
-
-        <button
-          onclick="return confirm('Delete this task?')"
-          class="text-red-500 text-sm flex items-center gap-1 px-6 py-2 rounded-2xl hover:bg-red-100">
-          <i class="ri-delete-bin-6-line"></i> Delete
-        </button>
-      </form>
-           </div>
-            </div>
-              </div>
-
-                <?php endwhile; ?>
-
-                <?php else: ?>
-                <p class="text-center text-gray-500 py-10">
-                  No tasks yet. Add your first task to get started!
-                </p>
-                <?php endif; ?>
-              </div>
             </div>
           </section>
         </div>
@@ -228,6 +272,35 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
         </form>
       </div>
     </div>
+
+    <div id="editModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-xl w-full max-w-md p-6">
+    <h2 class="text-xl font-semibold mb-4">Edit Task</h2>
+
+    <form action="../backend/update_task.php" method="POST">
+      <input type="hidden" name="task_id" id="edit_id">
+
+      <input id="edit_title" name="task_title"
+        class="w-full mb-3 px-3 py-2 border rounded-lg" required>
+
+      <textarea id="edit_description" name="task_dis"
+        class="w-full mb-3 px-3 py-2 border rounded-lg"></textarea>
+
+      <input id="edit_category" name="categoty"
+        class="w-full mb-4 px-3 py-2 border rounded-lg">
+
+      <div class="flex justify-end gap-3">
+        <button type="button" onclick="closeEditModal()"
+          class="px-4 py-2 border rounded-lg">Cancel</button>
+
+        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
     <script>
   function openModal() {
     taskModal.classList.remove('hidden');
@@ -237,6 +310,23 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
     taskModal.classList.add('hidden');
     taskModal.classList.remove('flex');
   }
+
+ 
+function openEditModal(id, title, description, category) {
+  editModal.classList.remove('hidden');
+  editModal.classList.add('flex');
+
+  document.getElementById('edit_id').value = id;
+  document.getElementById('edit_title').value = title;
+  document.getElementById('edit_description').value = description;
+  document.getElementById('edit_category').value = category;
+}
+
+function closeEditModal() {
+  editModal.classList.add('hidden');
+  editModal.classList.remove('flex');
+}
 </script>
+
   </body>
 </html>
