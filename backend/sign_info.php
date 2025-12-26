@@ -18,7 +18,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $username,$email, $hashedPassword);
 
 if ($stmt->execute()) {
-    header("Location: ../src/login.html");
+    header("Location: ../src/loginform.php");
     exit();
 } else {
     die("Something went wrong. Try again.");

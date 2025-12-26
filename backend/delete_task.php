@@ -16,5 +16,7 @@ $stmt->execute();
 $stmt->close();
 $conn->close();
 
-header("Location: ../src/dashboard.php");
+// header("Location: ../src/dashboard.php");
+// exit;
+header("Location: " . $_SERVER['HTTP_REFERER']);
 exit;

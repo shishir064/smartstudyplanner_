@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,8 +31,8 @@
         <form action="../backend/login.php" method="post" class=" flex flex-col gap-4">
           <h1 class="text-center font-medium text-4xl md:text-5xl lg:text-6xl">Log In</h1>
             <div class="flex flex-col ">
-                <label for="email">Email</label>
-                <input type="text" name="email" class="flex flex-1 border p-2 rounded" placeholder="Email" required>
+                <label for="username">Username</label>
+                <input type="text" name="username" class="flex flex-1 border p-2 rounded" placeholder="Username" required>
             </div>
             <div class="flex flex-col ">
                 <label for="password">Password</label>
@@ -50,3 +51,4 @@
 </body>
 
 </html>
+

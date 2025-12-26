@@ -1,78 +1,10 @@
 <?php include '../backend/db_connect.php';
 $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="./output.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-  </head>
+<?php include('open_layout.php') ?>
 
-  <body class="min-h-screen flex flex-col bg-[#F7FAFF]">
-    <header
-      class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white sticky z-10 top-0">
-      <nav
-        class="flex container mx-auto justify-between items-center px-4 py-6"
-      >
-        <h1 class="text-1xl md:text-3x1 lg:text-4xl font-bold">
-          <a href="./home.html"> Smart Study Planner</a>
-        </h1>
-        <div class="flex items-center gap-4 text-2xl">
-          <span class="hidden sm:block">Welcome, Student</span>
-
-          <form action="../backend/logout.php" method="POST" class="mt-3">
-            <button
-              type="submit"
-              onclick="return confirm('Are you sure you want to logout?')"
-              class="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200 flex items-center gap-1"
-            >
-              <i class="ri-delete-bin-6-line"></i> Logout
-            </button>
-          </form>
-        </div>
-      </nav>
-    </header>
-
-    <main class="flex-1 w-full">
-      <div class="max-w-8xl mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <aside class="bg-white rounded-xl shadow p-6 h-full">
-            <ul class="space-y-4 font-medium">
-              <li
-                class="text-blue-600 hover:text-blue-500 flex items-center gap-2"
-              >
-                <i class="ri-dashboard-line"></i>
-                <a href="dashboard.php">Dashboard</a>
-              </li>
-              <li
-                class="text-blue-600 hover:text-blue-500 flex items-center gap-2"
-              >
-                <i class="ri-dashboard-line"></i>
-                <a href="mytask.php">My tasks</a>
-              </li>
-              <li
-                class="flex items-center gap-2 text-blue-600 hover:text-blue-500 cursor-pointer"
-              >
-                <i class="ri-calendar-line"></i>
-                <a href="status.php">Status</a>
-              </li>
-              <li
-                class="text-blue-600 hover:text-blue-500 flex items-center gap-2"
-              >
-                <i class="ri-dashboard-line"></i>
-                <a href="profile.php">Profile</a>
-              </li>
-            </ul>
-          </aside>
-
-          <section class="lg:col-span-3 space-y-6">
-            <div class="flex justify-end">
+            
+          <div class="flex justify-between">
+              <h1 class="text-black text-4xl font-semibold  px-3 py-4 rounded-lg ">Task List</h1>
               <button
                 onclick="openModal()"
                 class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2">
@@ -82,7 +14,7 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
             <div class="bg-white rounded-xl shadow p-4">
               <div class="bg-white rounded-xl shadow overflow-hidden">
              <div class="relative overflow-x-auto min-h-[420px] max-h-[420px] -mx-4 sm:mx-0">
-             <table class="min-w-[900px] w-full text-sm text-left text-gray-700">
+    <table class="min-w-[900px] w-full text-sm text-left text-gray-700">
             <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
             <tr>
                 <th scope="col" class="p-4">
@@ -95,13 +27,16 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
                     S.N
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
-                    Title
+                    Topic
                 </th>
                 <th scope="col" class="px-6  py-3 font-medium">
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
-                    Category
+                    Subject
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
                     Time
@@ -112,103 +47,110 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
-                <td class="w-4 p-4">
-                    <div class="flex items-center">
-                        <input id="table-checkbox-2" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
-                        <label for="table-checkbox-2" class="sr-only">Table checkbox</label>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    1
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                    Math
-                </th>
-                <td class="px-6 py-4">
-                    Silver Lorem ipsum, dolor sit amet consectetur adipisicing elit. I
-                </td>
-                <td class="px-6 py-4">
-                    pending
-                </td>
-                <td class="px-6 py-4">
-                    2025-12-12
-                </td>
-                <td class="flex items-center px-6 py-4">
-                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
-                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
-                </td>
-            </tr>
-            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
-                <td class="w-4 p-4">
-                    <div class="flex items-center">
-                        <input id="table-checkbox-3" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
-                        <label for="table-checkbox-3" class="sr-only">Table checkbox</label>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    2
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                    Science
-                </th>
-                <td class="px-6 py-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam.
-                </td>
-                <td class="px-6 py-4">
-                    completed
-                </td>
-                <td class="px-6 py-4">
-                    2025-12-12
-                </td>
-                <td class="flex items-center px-6 py-4">
-                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
-                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
-                </td>
-            </tr>
-            <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
-                <td class="w-4 p-4">
-                    <div class="flex items-center">
-                        <input id="table-checkbox-4" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
-                        <label for="table-checkbox-4" class="sr-only">Table checkbox</label>
-                    </div>
-                </td>
-                <td class="px-6 py-4">
-                    3
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                    english
-                </th>
-                <td class="px-6 py-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto explicabo quaerat harum.
-                </td>
-                <td class="px-6 py-4">
-                    pending
-                </td>
-                <td class="px-6 py-4">
-                    2025-12-12
-                </td>
-                <td class="flex items-center px-6 py-4">
-                    <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
-                    <a href="#" class="font-medium text-danger hover:underline ms-3">Remove</a>
-                </td>
-            </tr>
-            
-        </tbody>
+<?php if (mysqli_num_rows($result) > 0): ?>
+<?php $sn = 1; ?>
+<?php while ($row = mysqli_fetch_assoc($result)): ?>
+<?php $completed = $row['status'] == 1; ?>
+
+<tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+
+  
+  <td class="w-4 p-4 text-center">
+    <form action="../backend/update_status.php" method="POST">
+      <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
+      <input type="hidden" name="status" value="<?= $completed ? 0 : 1; ?>">
+
+      <input
+        type="checkbox"
+        onchange="this.form.submit()"
+        <?= $completed ? 'checked' : ''; ?>
+        class="w-4 h-4 accent-blue-600 cursor-pointer"
+      >
+    </form>
+  </td>
+
+  
+  <td class="px-6 py-4 font-medium">
+    <?= $sn++; ?>
+  </td>
+
+  
+  <th class="px-6 py-4 font-semibold text-heading whitespace-nowrap">
+    <?= htmlspecialchars($row['task_title']); ?>
+  </th>
+
+  
+  <td class="px-6 py-4 text-gray-600">
+    <?= htmlspecialchars($row['task_description']); ?>
+  </td>
+
+  
+  <td class="px-6 py-4">
+    <span class="px-3 py-1 text-xs">
+      <?= htmlspecialchars($row['categoty']); ?>
+    </span>
+
+  </td>
+
+  <td class="px-6 py-4">
+    <span class="px-3 py-1 text-xs rounded-full
+      <?= $completed
+        ? 'bg-green-100 text-green-700'
+        : 'bg-yellow-100 text-yellow-700'; ?>">
+      <?= $completed ? 'Completed' : 'Pending'; ?>
+    </span>
+  </td>
+
+ 
+  <td class="px-6 py-4 text-gray-500">
+    <?= htmlspecialchars($row['created_at']); ?>
+  </td>
+
+  
+  <td class="px-6 py-4 flex gap-4">
+
+    
+    <button
+      onclick="openEditModal(
+        <?= $row['id']; ?>,
+        '<?= htmlspecialchars($row['task_title'], ENT_QUOTES); ?>',
+        '<?= htmlspecialchars($row['task_description'], ENT_QUOTES); ?>',
+        '<?= htmlspecialchars($row['categoty'], ENT_QUOTES); ?>'
+      )"
+      class="text-blue-500 hover:text-blue-600 hover:underline font-medium">
+      Edit
+    </button>
+
+    
+    <form action="../backend/delete_task.php" method="POST">
+      <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
+      <button
+        onclick="return confirm('Delete this task?')"
+        class="text-red-500 hover:text-red-600 hover:underline font-medium">
+        Remove
+      </button>
+    </form>
+
+  </td>
+</tr>
+
+<?php endwhile; ?>
+<?php else: ?>
+<tr>
+  <td colspan="7" class="text-center py-10 text-gray-500">
+    No tasks found. Add your first task.
+  </td>
+</tr>
+<?php endif; ?>
+</tbody>
+
     </table>
   </div>
 </div>
 
 
-            </div>
-          </section>
-        </div>
-      </div>
-    </main>
+     <?php include('close_layout.php') ?>
 
-    <footer class="bg-gray-900 text-gray-300 text-center py-6">
-      <p>© 2025 Smart Study Planner | All Rights Reserved</p>
-    </footer>
     <div
       id="taskModal"
       class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
@@ -301,32 +243,7 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
   </div>
 </div>
 
-    <script>
-  function openModal() {
-    taskModal.classList.remove('hidden');
-    taskModal.classList.add('flex');
-  }
-  function closeModal() {
-    taskModal.classList.add('hidden');
-    taskModal.classList.remove('flex');
-  }
-
- 
-function openEditModal(id, title, description, category) {
-  editModal.classList.remove('hidden');
-  editModal.classList.add('flex');
-
-  document.getElementById('edit_id').value = id;
-  document.getElementById('edit_title').value = title;
-  document.getElementById('edit_description').value = description;
-  document.getElementById('edit_category').value = category;
-}
-
-function closeEditModal() {
-  editModal.classList.add('hidden');
-  editModal.classList.remove('flex');
-}
-</script>
+  <script src="script.js"></script>
 
   </body>
 </html>
