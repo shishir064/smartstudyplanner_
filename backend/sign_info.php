@@ -13,7 +13,7 @@ if (empty($username) || empty($email) || empty($password)) {
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 
-$sql = "INSERT INTO signup_info (user_name,email, password) VALUES (?, ?, ?)";
+$sql = "INSERT INTO users(username,email, password) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $username,$email, $hashedPassword);
 

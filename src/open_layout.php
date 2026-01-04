@@ -23,7 +23,7 @@
           <a href="./home.html"> Smart Study Planner</a>
         </h1>
         <div class="flex items-center gap-4 text-2xl">
-          <span class="hidden sm:block">Welcome,shishir</span>
+          <span class="hidden sm:block">Welcome,<?= htmlspecialchars($_SESSION['username']) ?></span>
 
           <div class="relative group">
             <!-- Button -->

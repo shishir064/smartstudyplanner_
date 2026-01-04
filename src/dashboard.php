@@ -1,14 +1,7 @@
 <?php
-include '../backend/db_connect.php';
-
-$tasks = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");
-
-$totalTasks = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM tasks"));
-$completedTasks = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM tasks WHERE status = 1"));
-$pendingTasks = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM tasks WHERE status = 0"));
+include '../backend/dashboard_data.php';
+include('open_layout.php');
 ?>
-
-<?php include('open_layout.php') ?>
 
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -44,16 +37,15 @@ $pendingTasks = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM tasks WHERE 
             
               <div class="flex-1">
                 <h3 class="font-semibold <?= $completed ? 'line-through text-gray-400' : '' ?>">
-                  <?= htmlspecialchars($row['task_title']) ?>
+                  <?= htmlspecialchars($row['title']) ?>
                 </h3>
 
                 <p class="text-sm mt-1 <?= $completed ? 'line-through text-gray-400' : 'text-gray-600' ?>">
-                  <?= htmlspecialchars($row['task_description']) ?>
+                  <?= htmlspecialchars($row['description']) ?>
                 </p>
 
                 <div class="flex gap-2 mt-2 text-xs text-gray-400">
-                  <span><?= htmlspecialchars($row['categoty']) ?></span>
-                  <span><?= htmlspecialchars($row['created_at']) ?></span>
+                  <span><?= htmlspecialchars($row['subject']) ?></span>
                 </div>
 
               </div>

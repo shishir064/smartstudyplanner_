@@ -22,3 +22,5 @@ function closeEditModal() {
   editModal.classList.add('hidden');
   editModal.classList.remove('flex');
 }
+
+

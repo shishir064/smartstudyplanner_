@@ -30,12 +30,12 @@
         <form action="../backend/login.php" method="post" class=" flex flex-col gap-4">
           <h1 class="text-center font-medium text-4xl md:text-5xl lg:text-6xl">Log In</h1>
             <div class="flex flex-col ">
-                <label for="username">Username</label>
-                <input type="text" name="username" class="flex flex-1 border p-2 rounded" placeholder="Username" required>
+                <label for="email">Email</label>
+                <input type="text" name="email" class="flex flex-1 border p-2 rounded" placeholder="Email" required>
             </div>
             <div class="flex flex-col ">
                 <label for="password">Password</label>
-                <input type="password" class="flex flex-1 border p-2 rounded" placeholder="password" required>
+                <input type="password" name="password" class="flex flex-1 border p-2 rounded" placeholder="password" required>
             </div>
             <input type="submit" class="bg-blue-600 text-white p-2 rounded" value="Log In">
         </form>

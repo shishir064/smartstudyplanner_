@@ -1,5 +1,5 @@
-<?php include '../backend/db_connect.php';
-$result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
+
+<?php include '../backend/fetchtask.php'; ?>
 <?php include('open_layout.php') ?>
 
             
@@ -39,110 +39,116 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
                     Status
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
-                    Time
+                    Start Date
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    End Date
                 </th>
                 <th scope="col" class="px-6 py-3  font-medium">
                     Action
                 </th>
+                <th scope="col" class="px-6 py-3  font-medium">
+                    Mark as Complete
+                </th>
             </tr>
         </thead>
+
+
         <tbody>
-<?php if (mysqli_num_rows($result) > 0): ?>
-<?php $sn = 1; ?>
-<?php while ($row = mysqli_fetch_assoc($result)): ?>
-<?php $completed = $row['status'] == 1; ?>
+        <?php if ($result->num_rows > 0): ?>
+    <?php $sn = 1; while ($row = $result->fetch_assoc()): ?>
+    <tr id="row-<?= $row['task_id']; ?>" class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
 
-<tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+        <!-- Checkbox -->
+        <td class="w-4 p-4 text-center">
+            <form action="../backend/update_status.php" method="POST">
+                <input type="hidden" name="task_id" value="<?= $row['task_id']; ?>">
+                <input type="checkbox" class="w-4 h-4 accent-blue-600">
+            </form>
+        </td>
 
-  
-  <td class="w-4 p-4 text-center">
-    <form action="../backend/update_status.php" method="POST">
-      <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
-      <input type="hidden" name="status" value="<?= $completed ? 0 : 1; ?>">
+        <!-- S.N -->
+        <td class="px-6 py-4 font-medium">
+            <?= $sn++; ?>
+        </td>
 
-      <input
-        type="checkbox"
-        onchange="this.form.submit()"
-        <?= $completed ? 'checked' : ''; ?>
-        class="w-4 h-4 accent-blue-600 cursor-pointer"
-      >
-    </form>
-  </td>
+        <!-- Topic -->
+        <td class="px-6 py-4 font-semibold">
+            <?= htmlspecialchars($row['title']); ?>
+        </td>
 
-  
-  <td class="px-6 py-4 font-medium">
-    <?= $sn++; ?>
-  </td>
+        <!-- Description -->
+        <td class="px-6 py-4 text-gray-600">
+            <?= htmlspecialchars($row['description']); ?>
+        </td>
 
-  
-  <th class="px-6 py-4 font-semibold text-heading whitespace-nowrap">
-    <?= htmlspecialchars($row['task_title']); ?>
-  </th>
+        <!-- Subject -->
+        <td class="px-6 py-4">
+            <?= htmlspecialchars($row['subject'] ?? '—'); ?>
+        </td>
 
-  
-  <td class="px-6 py-4 text-gray-600">
-    <?= htmlspecialchars($row['task_description']); ?>
-  </td>
+        <!-- Status -->
+        <td class="px-6 py-4">
+          <span  id="status-<?= $row['task_id']; ?>" class="px-3 py-1 text-xs rounded-full
+          <?= $row['status'] === 'completed'? 'bg-green-100 text-green-700': 'bg-yellow-100 text-yellow-700'; ?>">
+          <?= ucfirst($row['status']); ?>
+         </span>
+        </td>
 
-  
-  <td class="px-6 py-4">
-    <span class="px-3 py-1 text-xs">
-      <?= htmlspecialchars($row['categoty']); ?>
-    </span>
 
-  </td>
+        <!-- Start Date -->
+        <td class="px-6 py-4 text-gray-500">
+            <?= $row['start_date']; ?>
+        </td>
 
-  <td class="px-6 py-4">
-    <span class="px-3 py-1 text-xs rounded-full
-      <?= $completed
-        ? 'bg-green-100 text-green-700'
-        : 'bg-yellow-100 text-yellow-700'; ?>">
-      <?= $completed ? 'Completed' : 'Pending'; ?>
-    </span>
-  </td>
+        <!-- End Date -->
+        <td class="px-6 py-4 text-gray-500">
+            <?= $row['end_date']; ?>
+        </td>
 
- 
-  <td class="px-6 py-4 text-gray-500">
-    <?= htmlspecialchars($row['created_at']); ?>
-  </td>
+        <!-- Actions -->
+        <td class="px-6 py-4 flex gap-4">
+            <button
+                onclick="openEditModal(
+                    <?= $row['task_id']; ?>,
+                    '<?= htmlspecialchars($row['title'], ENT_QUOTES); ?>',
+                    '<?= htmlspecialchars($row['description'], ENT_QUOTES); ?>'
+                )"
+                class="text-blue-500 hover:underline">
+                Edit
+            </button>
 
-  
-  <td class="px-6 py-4 flex gap-4">
+            <form action="../backend/delete_task.php" method="POST">
+                <input type="hidden" name="task_id" value="<?= $row['task_id']; ?>">
+                <button onclick="return confirm('Delete this task?')"
+                        class="text-red-500 hover:underline">
+                    Remove
+                </button>
+            </form>
+        </td>
 
-    
-    <button
-      onclick="openEditModal(
-        <?= $row['id']; ?>,
-        '<?= htmlspecialchars($row['task_title'], ENT_QUOTES); ?>',
-        '<?= htmlspecialchars($row['task_description'], ENT_QUOTES); ?>',
-        '<?= htmlspecialchars($row['categoty'], ENT_QUOTES); ?>'
-      )"
-      class="text-blue-500 hover:text-blue-600 hover:underline font-medium">
-      Edit
-    </button>
+        <!-- Mark Complete -->
+        <td class="px-6 py-4">
+         <?php if ($row['status'] === 'pending'): ?>
+         <button onclick="completeTask(<?= $row['task_id']; ?>)" class="text-green-600 hover:underline font-medium">
+         Mark as Complete
+         </button>
+         <?php else: ?>-
+         <?php endif; ?>
+        </td>
 
-    
-    <form action="../backend/delete_task.php" method="POST">
-      <input type="hidden" name="task_id" value="<?= $row['id']; ?>">
-      <button
-        onclick="return confirm('Delete this task?')"
-        class="text-red-500 hover:text-red-600 hover:underline font-medium">
-        Remove
-      </button>
-    </form>
 
-  </td>
-</tr>
-
-<?php endwhile; ?>
+    </tr>
+    <?php endwhile; ?>
 <?php else: ?>
-<tr>
-  <td colspan="7" class="text-center py-10 text-gray-500">
-    No tasks found. Add your first task.
-  </td>
-</tr>
+    <tr>
+        <td colspan="10" class="text-center py-10 text-gray-500">
+            No tasks found. Add your first task.
+        </td>
+    </tr>
 <?php endif; ?>
 </tbody>
+
 
     </table>
   </div>
@@ -151,63 +157,43 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
 
      <?php include('close_layout.php') ?>
 
-    <div
-      id="taskModal"
-      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
-    >
+    <div id="taskModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50">
       <div class="bg-white rounded-xl w-full max-w-md p-6">
         <h2 class="text-xl font-semibold mb-4">Add New Task</h2>
 
         <form action="../backend/tasks.php" method="POST">
           <div class="space-y-2">
-              <label for="taskTitle" class="text-sm font-medium"
-                >Topic *</label
-              >
-              <input type="text" name="task_title" id="taskTitle" required
-                class="w-full px-3 py-2 rounded-lg border border-input bg-[#F7FAFF] focus:outline-none"
-                placeholder="Enter task title"
-              />
+              <label for="taskTitle" class="text-sm font-medium">Topic *</label>
+              <input type="text" name="topic" id="taskTitle" required class="w-full px-3 py-2 rounded-lg border border-input bg-[#F7FAFF] focus:outline-none" placeholder="Enter task title"/>
             </div>
 
             <div class="space-y-2">
-              <label for="taskDescription" class="text-sm font-medium"
-                >Description</label
-              >
-              <textarea id="taskDescription" rows="3" name="task_dis"
+              <label for="taskDescription" class="text-sm font-medium">Description</label>
+              <textarea id="taskDescription" rows="3" name="task_des"
                 class="w-full px-3 py-2 rounded-lg border border-input bg-[#F7FAFF] focus:outline-none"
                 placeholder="Add task details..."
               ></textarea>
             </div>
 
             <div class="space-y-2">
-              <label for="taskCategory" class="text-sm font-medium"
-                >Category *</label
-              >
-              <input type="text" id="taskCategory" name="categoty"
-                class="w-full px-3 py-2 rounded-lg border bg-[#F7FAFF] focus:outline-none"
-                placeholder="e.g., Mathematics, Science"
-              />
+              <label for="taskSubject" class="text-sm font-medium">Subject *</label>
+              <input type="text" id="taskSubject" name="subject" class="w-full px-3 py-2 rounded-lg border bg-[#F7FAFF] focus:outline-none" placeholder="e.g., Mathematics, Science"/>
             </div>
 
             <div class="space-y-2">
-              <label for="taskDueDate" class="text-sm font-medium"
-                >Deadline *</label
-              >
-              <input type="date" id="taskDueDate" name="created_at"
-                class="w-full px-3 py-2 rounded-lg border bg-[#F7FAFF] focus:outline-none"
-              />
+              <label for="taskDueDate" class="text-sm font-medium" >Start Date *</label>
+              <input type="date" id="taskDueDate" name="start_date" class="w-full px-3 py-2 rounded-lg border bg-[#F7FAFF] focus:outline-none"/>
+            </div>
+            <div class="space-y-2">
+              <label for="taskDueDate" class="text-sm font-medium" >End Date *</label>
+              <input type="date" id="taskDueDate" name="end_date" class="w-full px-3 py-2 rounded-lg border bg-[#F7FAFF] focus:outline-none"/>
             </div>
 
           <div class="flex justify-end gap-3 mt-6">
-            <button
-              type="button"
-              onclick="closeModal()"
-              class="px-4 py-2 border rounded-lg"
-            >
+            <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-lg">
               Cancel
             </button>
-            <button
-              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Add Task
             </button>
           </div>
@@ -244,6 +230,32 @@ $result = mysqli_query($conn, "SELECT * FROM tasks ORDER BY id DESC");?>
 </div>
 
   <script src="script.js"></script>
+
+  <script>
+    function completeTask(task_id) {
+    fetch('../backend/complete_task.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'task_id=' + task_id
+    })
+    .then(res => res.text())
+    .then(() => {
+        // Update status badge
+        const status = document.getElementById('status-' + task_id);
+        if (status) {
+            status.textContent = 'Completed';
+            status.className =
+              'px-3 py-1 text-xs rounded-full bg-green-100 text-green-700';
+        }
+
+        // Remove row after 2 seconds
+        setTimeout(() => {
+            const row = document.getElementById('row-' + task_id);
+            if (row) row.remove();
+        }, 2000);
+    });
+}
+  </script>
 
   </body>
 </html>
