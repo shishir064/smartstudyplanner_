@@ -59,7 +59,7 @@
     <?php $sn = 1; while ($row = $result->fetch_assoc()): ?>
     <tr id="row-<?= $row['task_id']; ?>" class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
 
-        <!-- Checkbox -->
+        
         <td class="w-4 p-4 text-center">
             <form action="../backend/update_status.php" method="POST">
                 <input type="hidden" name="task_id" value="<?= $row['task_id']; ?>">
@@ -67,27 +67,27 @@
             </form>
         </td>
 
-        <!-- S.N -->
+        
         <td class="px-6 py-4 font-medium">
             <?= $sn++; ?>
         </td>
 
-        <!-- Topic -->
+        
         <td class="px-6 py-4 font-semibold">
             <?= htmlspecialchars($row['title']); ?>
         </td>
 
-        <!-- Description -->
+        
         <td class="px-6 py-4 text-gray-600">
             <?= htmlspecialchars($row['description']); ?>
         </td>
 
-        <!-- Subject -->
+        
         <td class="px-6 py-4">
             <?= htmlspecialchars($row['subject'] ?? '—'); ?>
         </td>
 
-        <!-- Status -->
+        
         <td class="px-6 py-4">
           <span  id="status-<?= $row['task_id']; ?>" class="px-3 py-1 text-xs rounded-full
           <?= $row['status'] === 'completed'? 'bg-green-100 text-green-700': 'bg-yellow-100 text-yellow-700'; ?>">
@@ -96,24 +96,27 @@
         </td>
 
 
-        <!-- Start Date -->
+        
         <td class="px-6 py-4 text-gray-500">
             <?= $row['start_date']; ?>
         </td>
 
-        <!-- End Date -->
+       
         <td class="px-6 py-4 text-gray-500">
             <?= $row['end_date']; ?>
         </td>
 
-        <!-- Actions -->
+        
         <td class="px-6 py-4 flex gap-4">
             <button
-                onclick="openEditModal(
-                    <?= $row['task_id']; ?>,
-                    '<?= htmlspecialchars($row['title'], ENT_QUOTES); ?>',
-                    '<?= htmlspecialchars($row['description'], ENT_QUOTES); ?>'
-                )"
+                  onclick="openEditModal(
+                  <?= $row['task_id']; ?>,
+                  '<?= htmlspecialchars($row['title'], ENT_QUOTES); ?>',
+                  '<?= htmlspecialchars($row['description'], ENT_QUOTES); ?>',
+                  '<?= htmlspecialchars($row['subject'], ENT_QUOTES); ?>',
+                  '<?= $row['start_date']; ?>',
+                  '<?= $row['end_date']; ?>'
+  )"
                 class="text-blue-500 hover:underline">
                 Edit
             </button>
@@ -127,7 +130,7 @@
             </form>
         </td>
 
-        <!-- Mark Complete -->
+       
         <td class="px-6 py-4">
          <?php if ($row['status'] === 'pending'): ?>
          <button onclick="completeTask(<?= $row['task_id']; ?>)" class="text-green-600 hover:underline font-medium">
@@ -205,7 +208,7 @@
   <div class="bg-white rounded-xl w-full max-w-md p-6">
     <h2 class="text-xl font-semibold mb-4">Edit Task</h2>
 
-    <form action="../backend/update_task.php" method="POST">
+    <form action="../backend/edit_task.php" method="POST">
       <input type="hidden" name="task_id" id="edit_id">
 
       Topic *<input id="edit_title" name="task_title" placeholder="Edit your topic" 
@@ -214,8 +217,13 @@
       Description *<textarea id="edit_description" name="task_dis" placeholder="Edit your details"
         class="w-full mb-3 px-3 py-2 border rounded-lg bg-[#F7FAFF]"></textarea>
 
-      Subject *<input id="edit_category" name="categoty" placeholder="Edit your subject"
+      Subject *<input id="edit_subject" name="subject" placeholder="Edit your subject"
         class="w-full mb-4 px-3 py-2 border rounded-lg bg-[#F7FAFF]">
+
+      Start Date *<input id="edit_start_date" type="date" name="start_date" placeholder="Edit your subject"
+        class="w-full mb-4 px-3 py-2 border rounded-lg bg-[#F7FAFF]">
+
+      End Date *<input id="edit_end_date" type="date" name="end_date" placeholder="Edit your subject" class="w-full mb-4 px-3 py-2 border rounded-lg bg-[#F7FAFF]">
 
       <div class="flex justify-end gap-3">
         <button type="button" onclick="closeEditModal()"
@@ -252,9 +260,26 @@
         setTimeout(() => {
             const row = document.getElementById('row-' + task_id);
             if (row) row.remove();
-        }, 2000);
+        }, 1000);
     });
 }
+
+function openEditModal(id, title, description, subject, startDate, endDate) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_title').value = title;
+    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_subject').value = subject;
+    document.getElementById('edit_start_date').value = startDate;
+    document.getElementById('edit_end_date').value = endDate;
+
+    document.getElementById('editModal').classList.remove('hidden');
+    document.getElementById('editModal').classList.add('flex');
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').classList.add('hidden');
+}
+
   </script>
 
   </body>

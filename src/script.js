@@ -8,15 +8,18 @@ function openModal() {
   }
 
  
-function openEditModal(id, title, description, category) {
-  editModal.classList.remove('hidden');
-  editModal.classList.add('flex');
+function openEditModal(id, title, description, subject, startDate, endDate) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_title').value = title;
+    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_subject').value = subject;
+    document.getElementById('edit_start_date').value = startDate;
+    document.getElementById('edit_end_date').value = endDate;
 
-  document.getElementById('edit_id').value = id;
-  document.getElementById('edit_title').value = title;
-  document.getElementById('edit_description').value = description;
-  document.getElementById('edit_category').value = category;
+    document.getElementById('editModal').classList.remove('hidden');
+    document.getElementById('editModal').classList.add('flex');
 }
+
 
 function closeEditModal() {
   editModal.classList.add('hidden');

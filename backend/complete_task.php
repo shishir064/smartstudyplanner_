@@ -20,7 +20,7 @@ $stmt->bind_param("ii", $task_id, $user_id);
 $stmt->execute();
 
 /* 2️⃣ Wait 2 seconds */
-sleep(2);
+sleep(1);
 
 /* 3️⃣ Delete task */
 $sql = "DELETE FROM tasks 
