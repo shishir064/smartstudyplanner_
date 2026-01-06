@@ -72,12 +72,6 @@
                 <a href="mytask.php">My tasks</a>
               </li>
               <li
-                class="flex items-center gap-2 text-blue-600 hover:text-blue-500 cursor-pointer"
-              >
-                <i class="ri-calendar-line"></i>
-                <a href="status.php">Status</a>
-              </li>
-              <li
                 class="text-blue-600 hover:text-blue-500 flex items-center gap-2"
               >
                 <i class="ri-dashboard-line"></i>

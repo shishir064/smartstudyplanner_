@@ -9,17 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT 
-            task_id,
-            title,
-            description,
-            subject,
-            status,
-            start_date,
-            end_date
-        FROM tasks
-        WHERE user_id = ?
-        ORDER BY task_id DESC";
+$sql = "SELECT task_id,title,description,subject,status,start_date,end_date FROM tasks WHERE user_id = ? ORDER BY task_id DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);

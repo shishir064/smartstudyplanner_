@@ -14,7 +14,7 @@
             <div class="bg-white rounded-xl shadow p-4">
               <div class="bg-white rounded-xl shadow overflow-hidden">
              <div class="relative overflow-x-auto min-h-[420px] max-h-[420px] -mx-4 sm:mx-0">
-    <table class="min-w-[900px] w-full text-sm text-left text-gray-700">
+             <table class="min-w-[900px] w-full text-sm text-left text-gray-700">
             <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
             <tr>
                 <th scope="col" class="p-4">
